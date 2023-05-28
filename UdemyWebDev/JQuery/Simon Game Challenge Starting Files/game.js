@@ -100,7 +100,6 @@ function nextSequnce(){
     
 }
 
-
 $(document).on("keypress", function(e){
 
     if (started == false){
