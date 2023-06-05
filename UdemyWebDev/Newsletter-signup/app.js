@@ -35,10 +35,10 @@ app.post("/", function(req, res){
     };
 
     var jsonData = JSON.stringify(data)
-    url = "https://us21.api.mailchimp.com/3.0/lists/faedc3717a" 
+    url = 
     const options = {
         method: "POST",
-        auth: "trev:d0b5f9536d4988f78693edb808f24392-us21"
+        auth: "trev:
 
     }
 
@@ -66,9 +66,3 @@ app.listen(process.env.PORT || 3000, function(){
     console.log("listening on Heroku");
 });
 
-//api key
-//d0b5f9536d4988f78693edb808f24392-us21
-
-
-//list id
-//faedc3717a
