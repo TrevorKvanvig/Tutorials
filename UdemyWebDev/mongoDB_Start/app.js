@@ -1,36 +1,113 @@
-const secrets = require(__dirname + "/secrets.js")
-const assert = require('assert')
+const secrets = require(__dirname + "/secrets.js");
+const { connectToDb, getDb } = require(__dirname + "/db.js")
+const { ObjectId } = require('mongodb')
+const express = require("express");
+const assert = require('assert');
 
-const { MongoClient } = require("mongodb");
-// Replace the uri string with your connection string.
+
+const app = express();
+app.use(express.json())
 
 
-const uri = "mongodb+srv://Cluster91362:"+secrets.getPassword()+"@cluster91362.pghfyon.mongodb.net/?retryWrites=true&w=majority";
-const client = new MongoClient(uri);
-async function run() {
-  try {
-    const database = client.db('TestDB');
-    const collection = database.collection('Fruits');
-    // Query for a movie that has the title 'Back to the Future'
-    collection.insertMany([
-      {
-        name: "Apple",
-        score: 8,
-        review: "Greate Fruit"
-      },
-      {
-        name: "Apple",
-        score: 8,
-        review: "Greate Fruit"
-      }
-    ], function(err, result){
-      assert.equal(err,null);
-      assert.equal(2, result.result.n);
-      assert.equal(2, result.ops.length)
+
+//const uri = "mongodb+srv://Cluster91362:"+secrets.getPassword()+"@cluster91362.pghfyon.mongodb.net/?retryWrites=true&w=majority";
+//const client = new MongoClient(uri);
+
+
+// will hold database
+let db
+
+//this works because we set a call back function inside of get db method in db.js
+connectToDb(function(err){
+  // only listen for requests after connection is complete with no errors
+  if(!err){
+    app.listen(3000, function(){
+      console.log("listening");
     })
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
+
+    // set db to connected database using function from db.js
+    db = getDb()
   }
+
+})
+
+
+app.get("/books", function(req, res){
+  let books = []
+
+  db.collection('books')
+    .find()// returns cursor not documents
+    .sort({author: 1}) // sort books alphabetiaclly by author
+    .forEach(function(book){
+      books.push(book) // go through every element in the cursor object returned by find and add to our book array we created
+    })
+
+
+    .then(function(){ // after books get added to array send books to server with 200 ok message
+      res.status(200).json(books)
+    })
+    .catch(function() { // other wise send faluire 
+      console.log("FAILED");
+      res.status(500).json({error: 'could not fetch documents'})
+    })
+     
+
+
+});
+
+app.get("/books/:bookID", function(req, res){
+  if(isValidObjectId(req.params.bookID)){ // check if string id is a valid format must be 24Hex long
+
+    db.collection('books')
+      .findOne({_id: new ObjectId(req.params.bookID)})
+      .then(function(doc){ // get document with callback function once returned asyncly
+        res.status(200).json(doc);
+      })
+      .catch(function() { // other wise send faluire 
+        console.log("FAILED");
+        res.status(500).json({error: 'could not fetch document'});
+      })
+
+  }else{
+    res.status(500).json({error: 'Not a Valid Doc ID'});
+  }
+});
+
+app.post("/books", function(req, res){
+  const book = req.body
+
+  db.collection('books').insertOne(book).then(function(result){
+    res.status(201).json(result);
+  }).catch(function(){
+    res.status(500).json({err: "could not create doc"});
+  })
+})
+
+app.delete("/books/:bookID", function(req,res){
+  
+  if(isValidObjectId(req.params.bookID)){ // check if string id is a valid format must be 24Hex long
+
+    db.collection('books')
+      .deleteOne({_id: new ObjectId(req.params.bookID)})
+      .then(function(resuslt){ // get document with callback function once returned asyncly
+        res.status(200).json(resuslt);
+      })
+      .catch(function() { // other wise send faluire 
+        console.log("FAILED");
+        res.status(500).json({error: 'could not Delete document'});
+      })
+
+  }else{
+    res.status(500).json({error: 'Not a Valid Doc ID'});
+  }
+})
+
+function isValidObjectId(id){
+     
+  if(ObjectId.isValid(id)){
+      if((String)(new ObjectId(id)) === id)
+          return true;       
+      return false;
+  }
+  return false;
 }
-run().catch(console.dir);
