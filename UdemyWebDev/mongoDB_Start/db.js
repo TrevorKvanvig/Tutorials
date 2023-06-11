@@ -1,10 +1,13 @@
 const { MongoClient } = require('mongodb')
+const secrets = require(__dirname + "/secrets.js");
 let dbConnection
-
+// const uri = 'mongodb://localhost:27017/bookstore'
+const uri = "mongodb+srv://Cluster91362:"+secrets.getPassword()+"@cluster91362.pghfyon.mongodb.net/Bookstore?retryWrites=true&w=majority"
 module.exports = {
   //cb is call back function
   connectToDb: function(cb){
-    MongoClient.connect('mongodb://localhost:27017/bookstore')
+    
+    MongoClient.connect(uri)
     
 
       .then(function(client){

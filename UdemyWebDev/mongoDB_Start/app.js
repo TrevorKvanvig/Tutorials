@@ -28,7 +28,6 @@ connectToDb(function(err){
     // set db to connected database using function from db.js
     db = getDb()
   }
-
 })
 
 
