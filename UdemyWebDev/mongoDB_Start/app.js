@@ -89,7 +89,7 @@ app.delete("/books/:bookID", function(req,res){
 
     db.collection('books')
       .deleteOne({_id: new ObjectId(req.params.bookID)})
-      .then(function(resuslt){ // get document with callback function once returned asyncly
+      .then(function(resuslt){ // gets sucess delete message
         res.status(200).json(resuslt);
       })
       .catch(function() { // other wise send faluire 
@@ -101,6 +101,26 @@ app.delete("/books/:bookID", function(req,res){
     res.status(500).json({error: 'Not a Valid Doc ID'});
   }
 })
+
+app.patch("/books/:bookID", function(req,res){ // used to update fields
+  const updates = req.body
+  if(isValidObjectId(req.params.bookID)){ // check if string id is a valid format must be 24Hex long
+    
+    db.collection('books')
+      .updateOne({_id: new ObjectId(req.params.bookID)}, {$set: updates})
+      .then(function(resuslt){ // gets sucess delete message
+        res.status(200).json(resuslt);
+      })
+      .catch(function() { // other wise send faluire 
+        console.log("FAILED");
+        res.status(500).json({error: 'could not Update document'});
+      })
+
+  }else{
+    res.status(500).json({error: 'Not a Valid Doc ID'});
+  }
+})
+
 
 function isValidObjectId(id){
      
