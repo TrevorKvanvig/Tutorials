@@ -59,28 +59,24 @@ connectToDb(function(err){
     console.log('app unable to start becasue database not connected');
   }
 });
-
+// AFTER ACCESS IS SET UP
 app.get("/:customListName", function (req, res) {
     const custListName = req.params.customListName
     
-    const list = {
-        name: custListName,
-        items: defaultItems
-    }
 
     // go into connected database in a collection called toDos
-    db.collection('Lists').find().forEach(item => {
+    db.collection('Lists/' + custListName).find().forEach(item => {
         // find each item and add it to items array
         items.push(item)
     }).then(function(){
         
         if(items.length === 0){
             // if there are no items in the data base render list.ejs with default global items
-            res.status(200).render("list", { listTitle: list.name, newListItems: list.items })
+            res.status(200).render("list", { listTitle: custListName, newListItems: defaultItems })
         }else{
             // when successful 
             // render html page with items from database added in for each loop
-            res.status(200).render("list", { listTitle: day, newListItems: items })
+            res.status(200).render("list", { listTitle: custListName, newListItems: items })
         }
         
     }).catch(function(){
@@ -97,7 +93,6 @@ app.get("/:customListName", function (req, res) {
 });
 
 
-// AFTER ACCESS IS SET UP
 app.get("/", function (req, res) {
 
     // get current day from day.js function
@@ -135,20 +130,33 @@ app.post("/", function (req, res) {
     const newToDo = {
         name: req.body.newToDo
     }
+    if(req.body.list === date.getDate()){
+        // go to the todos collection and insert created json object
+        db.collection('Lists/toDos').insertOne(newToDo)
+            // then sucellfully added
+            .then(function(result){
+                res.status(201)
+            }).catch(function(){
+                // else did not add
+                console.log('could not add document to ' + getDbName());
+                res.status(500)
+        })
+    }else{
+        // go to the todos collection and insert created json object
+        db.collection('Lists/' + req.body.list ).insertOne(newToDo)
+            // then sucellfully added
+            .then(function(result){
+                res.status(201)
+            }).catch(function(){
+                // else did not add
+                console.log('could not add document to ' + getDbName());
+                res.status(500)
+            });
+    }
     
-    // go to the todos collection and insert created json object
-    db.collection('Lists/' + req.body.list ).insertOne(newToDo)
-        // then sucellfully added
-        .then(function(result){
-            res.status(201)
-        }).catch(function(){
-            // else did not add
-            console.log('could not add document to ' + getDbName());
-            res.status(500)
-    })
 
     // redirect back to home page where new item will be loaded becasue it will now be in database
-    if (req.body.list == date.getDate()){
+    if (req.body.list === date.getDate()){
         res.redirect("/")
     }else{
         res.redirect("/" + req.body.list)
@@ -167,7 +175,7 @@ app.post("/delete", function (req, res) {
     if(isValidObjectId(idToDelete)){
 
         // go to todos collection and delete id of checkbox item 
-        db.collection('toDos').deleteOne({_id: new ObjectId(idToDelete)})
+        db.collection('Lists/toDos').deleteOne({_id: new ObjectId(idToDelete)})
             // once deleted
             .then(function(result){
                 // redirect to home route with updated database
