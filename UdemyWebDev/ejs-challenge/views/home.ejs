@@ -2,9 +2,9 @@
 <h1>Home</h1>
 <p><%= startContent %></p>
 <% posts.forEach(function(post){ %>
-  <h1><%= post.postTitle %></h1>
-  <% let link = "/posts/" + post.postTitle%>
+  <h1><%= post.postTitle.substring(0, 43) + '...' %></h1>
 
+  <% let link = "/posts/" + post._id%>
   <p><%= post.postBody.substring(0, 100) + "..." %>
     <a href=<%= link %>>Read More</a>
   </p>

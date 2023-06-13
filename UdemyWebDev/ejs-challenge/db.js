@@ -1,7 +1,7 @@
 const {MongoClient} = require("mongodb")
 const secrets = require(__dirname + '/secrets.js')
-
-const uri = "mongodb+srv://Cluster91362:"+secrets.getPassword()+"@cluster91362.pghfyon.mongodb.net/ToDoList?retryWrites=true&w=majority"
+let dbName = 'BlogSite'
+const uri = "mongodb+srv://Cluster91362:"+secrets.getPassword()+"@cluster91362.pghfyon.mongodb.net/"+dbName+"?retryWrites=true&w=majority"
 let dbConnection
 
 module.exports = {
@@ -34,5 +34,9 @@ module.exports = {
       return dbConnection
     }
     
+  },
+
+  getDbName: function(){
+    return dbName;
   }
 }
