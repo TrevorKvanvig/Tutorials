@@ -6,6 +6,7 @@ const date = require(__dirname + "/date.js")
 const ejs = require("ejs");
 const app = express();
 const { ObjectId } = require("mongodb")
+var _ = require('lodash');
 
 //==================== Express setters ====================
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -36,7 +37,69 @@ function isValidObjectId(id){
         return false;
     }
     return false;
-}
+};
+
+function addToDb(dbName, valToAdd, res) {
+    // go to the todos collection and insert created json object
+    db.collection('Lists/' + dbName).insertOne(valToAdd)
+        // then sucellfully added
+        .then(function(result){
+            res.status(201)
+        }).catch(function(){
+            // else did not add
+            console.log('could not add document to ' + getDbName());
+            res.status(500)
+    })
+};
+
+function removeFromDb(dbName, valToDelete, res) {
+    db.collection('Lists/' + dbName).deleteOne({_id: new ObjectId(valToDelete)})
+        // once deleted
+        .then(function(result){
+            // redirect to home route with updated database
+            console.log("Sucsessfully Deleted Document with ID ", valToDelete);
+            res.status(200)
+                
+        }).catch(function(){
+            // if faliure
+            console.log("Failed To Delete Item with ID of ", valToDelete);
+            res.status(500)
+        });
+};
+
+function getFromDb(name, res) {
+    // go into connected database in a collection called toDos
+    db.collection('Lists/' + name).find().forEach(item => {
+        // find each item and add it to items array
+        items.push(item)
+    }).then(function(){
+        
+        if(items.length === 0){
+            // if there are no items in the data base render list.ejs with default global items
+            res.status(200).render("list", { listTitle: _.upperFirst(name), newListItems: defaultItems })
+        }else{
+            // when successful 
+            // render html page with items from database added in for each loop
+            res.status(200).render("list", { listTitle: _.upperFirst(name), newListItems: items })
+        }
+        
+    }).catch(function(){
+        // else failure
+        console.log("FAILED");
+        res.status(500)
+    })
+
+    items = []
+};
+
+
+
+
+
+
+
+
+
 
 //=========== Body ===========
 // SET UP ACCESS
@@ -59,39 +122,19 @@ connectToDb(function(err){
     console.log('app unable to start becasue database not connected');
   }
 });
+
 // AFTER ACCESS IS SET UP
 app.get("/:customListName", function (req, res) {
     const custListName = req.params.customListName
-    
 
-    // go into connected database in a collection called toDos
-    db.collection('Lists/' + custListName).find().forEach(item => {
-        // find each item and add it to items array
-        items.push(item)
-    }).then(function(){
-        
-        if(items.length === 0){
-            // if there are no items in the data base render list.ejs with default global items
-            res.status(200).render("list", { listTitle: custListName, newListItems: defaultItems })
-        }else{
-            // when successful 
-            // render html page with items from database added in for each loop
-            res.status(200).render("list", { listTitle: custListName, newListItems: items })
-        }
-        
-    }).catch(function(){
-        // else failure
-        console.log("FAILED");
-        res.status(500)
-    })
-    console.log(items);
+    // uses function to get items in database with name and loads them into front end
+    getFromDb(custListName, res);
 
     // reset items to empty so when site gets reloaded only database memory will keep track of to dos
     items = []
 
 
 });
-
 
 app.get("/", function (req, res) {
 
@@ -126,67 +169,39 @@ app.get("/", function (req, res) {
 })
 
 app.post("/", function (req, res) {
+    title = req.body.list
     // create json object to add to database
     const newToDo = {
         name: req.body.newToDo
     }
-    if(req.body.list === date.getDate()){
-        // go to the todos collection and insert created json object
-        db.collection('Lists/toDos').insertOne(newToDo)
-            // then sucellfully added
-            .then(function(result){
-                res.status(201)
-            }).catch(function(){
-                // else did not add
-                console.log('could not add document to ' + getDbName());
-                res.status(500)
-        })
-    }else{
-        // go to the todos collection and insert created json object
-        db.collection('Lists/' + req.body.list ).insertOne(newToDo)
-            // then sucellfully added
-            .then(function(result){
-                res.status(201)
-            }).catch(function(){
-                // else did not add
-                console.log('could not add document to ' + getDbName());
-                res.status(500)
-            });
-    }
-    
 
-    // redirect back to home page where new item will be loaded becasue it will now be in database
-    if (req.body.list === date.getDate()){
-        res.redirect("/")
-    }else{
-        res.redirect("/" + req.body.list)
+    // if title is for home directory
+    if(title === date.getDate()){
+        // add value to this database
+        addToDb('toDos', newToDo, res)
+        res.redirect('/')
+    } else {
+        addToDb(_.lowerCase(title), newToDo, res)
+        res.redirect("/" + _.lowerCase(title))
     }
-    
-    
-
 });
 
-
-
 app.post("/delete", function (req, res) {
-    idToDelete = req.body.checkbox
+    const idToDelete = req.body.checkbox
+    const title = req.body.listTitle
 
+    
     // if Mongo ID is of correct format
     if(isValidObjectId(idToDelete)){
 
-        // go to todos collection and delete id of checkbox item 
-        db.collection('Lists/toDos').deleteOne({_id: new ObjectId(idToDelete)})
-            // once deleted
-            .then(function(result){
-                // redirect to home route with updated database
-                console.log("Sucsessfully Deleted Document with ID ", idToDelete);
-                res.status(200).redirect("/")
-                
-            }).catch(function(){
-                // if faliure
-                console.log("Failed To Delete Item with ID of ", idToDelete);
-                res.status(500)
-            })
+        if(title === date.getDate()){
+            removeFromDb('toDos', idToDelete, res)
+            res.redirect("/")
+        }else{
+            removeFromDb(_.lowerCase(title), idToDelete, res)
+            res.redirect("/" + _.lowerCase(title))
+        }
+        
     }else{
         // if Mongo ID is not correct format
         res.status(500)
