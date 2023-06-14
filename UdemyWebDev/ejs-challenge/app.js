@@ -41,10 +41,10 @@ function addToDatabase(valToAdd, res) {
   // go into blogposts collection and insert value
   db.collection('BlogPosts').insertOne(valToAdd)
     .then(function (result) {
-      res.status(201)
+      res.status(201);
     }).catch(function () {
       console.log('could not add document to ' + getDbName());
-      res.status(500)
+      res.status(500);
     })
 };
 
@@ -70,7 +70,7 @@ function getFromDatabase(res) {
 
 function getPost(postId, res) {
   // format id for mongo db ex: Object(6488d8e67fb1e953e3eb7265)
-  postObjID = new ObjectId(postId)
+  const postObjID = new ObjectId(postId)
 
   // if id could be found
   if (isValidObjectId(postId)) {
@@ -132,7 +132,7 @@ app.get("/compose", function (req, res) {
 
 app.get("/posts/:id", function (req, res) {
   // gets id from home.ejs
-  postId = req.params.id
+  const postId = req.params.id
 
   // look in database through function with same id
   getPost(postId, res)
