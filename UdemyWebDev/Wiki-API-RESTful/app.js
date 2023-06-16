@@ -153,4 +153,24 @@ app.route('/articles/:mongoID')
 
     replaceArticle(articleID, newArticle, res)
   })
+  .patch(function(req, res) {
+    console.log(req.body)
+    const articleID = req.params.mongoID;
+
+    replaceArticle(articleID, req.body, res)
+  })
+  .delete(function(req, res) {
+    const articleID = new ObjectId(req.params.mongoID)
+    if (isValidObjectId(req.params.mongoID)){
+      db.collection('articles').deleteOne({_id: articleID})
+        .then(function(result) {
+          res.send(result);
+        }).catch(function() {
+          console.log('unable to delete all items in', getDbName());
+        })
+    }else {
+      console.log('not valid id');
+    }
+    
+  })
   
