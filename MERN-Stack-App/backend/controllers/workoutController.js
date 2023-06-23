@@ -28,6 +28,25 @@ const getWorkout = async (req,res) => {
 const createWorkout = async (req,res) => {
   const {title, weight, reps} = req.body;
 
+  //creating custom error messages
+  let emptyFeilds = []
+
+  if(!title) {
+    emptyFeilds.push('Title')
+  }
+  if(!weight) {
+    emptyFeilds.push('Weight')
+  }
+  if(!reps) {
+    emptyFeilds.push('Repititions')
+  }
+
+  if (emptyFeilds.length > 0) {
+    return res.status(400).json({error: 'Please fill in all the feilds', emptyFeilds})
+  }
+
+
+
   // if there is an error most likey it didnt follow Schema so catch and handle error
   try {
     // create document with passed in post request using Schema

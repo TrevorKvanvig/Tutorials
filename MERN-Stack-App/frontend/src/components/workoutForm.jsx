@@ -11,6 +11,7 @@ const WorkoutForm = () => {
   });
 
   const [error, setError] = useState(null)
+  const [emptyFeilds, setEmptyFeilds] = useState(['','',''])
 
   function handleChange(event){
     const {name, value} = event.target;
@@ -42,7 +43,8 @@ const WorkoutForm = () => {
     const json = await response.json()
 
     if(!response.ok) {
-      setError(json.error)
+      setError(json.error);
+      setEmptyFeilds(json.emptyFeilds);
 
     } else if(response.ok){
       setWorkoutDetails(() => ({title: '',
@@ -50,12 +52,13 @@ const WorkoutForm = () => {
       weight: ''}))
 
       setError(null)
+      setEmptyFeilds('null')
       console.log('new workout added');
       
       dispatch({type: 'CREATE_WORKOUT', payload: json}) // use dispach function to update state
     }
   }
-
+  
   return (
     <form className="create">
       <h3>Add New Workout</h3>
@@ -64,23 +67,26 @@ const WorkoutForm = () => {
       <input type='text' 
       onChange={handleChange} 
       name="title" 
-      value={newWorkoutDetails.title} />
+      value={newWorkoutDetails.title}
+      className={emptyFeilds.includes('Title') ? 'error' : ''} />
 
       <label>Repititions</label>
       <input type='text' 
       onChange={handleChange} 
       name="reps" 
-      value={newWorkoutDetails.reps} />
+      value={newWorkoutDetails.reps}
+      className={emptyFeilds.includes('Repititions') ? 'error' : ''} />
 
       <label>Weight</label>
       <input type='text' 
       onChange={handleChange} 
       name="weight" 
-      value={newWorkoutDetails.weight} />
+      value={newWorkoutDetails.weight}
+      className={emptyFeilds.includes('Weight') ? 'error' : ''} />
 
       <button 
       onClick={handleSubmit}>Add Workout</button>
-      {error && <div className='error'>{error}</div>}
+      {error && <div className='error'>{error }<br />{emptyFeilds.map(feildMissing => feildMissing + ' ')}</div>}
     </form>
   );
 }

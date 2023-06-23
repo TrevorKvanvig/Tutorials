@@ -46,6 +46,10 @@ export const workoutsReducer = (currentStateOfObject, action) => {
       return { // add workout passed after it gets created in data base as the first workout in workouts array ahead of all previous workouts
         workouts: [action.payload, ...currentStateOfObject.workouts]
       }
+    case 'DELETE_WORKOUT':
+      return { // add workout passed after it gets created in data base as the first workout in workouts array ahead of all previous workouts
+        workouts: currentStateOfObject.workouts.filter(prev => action.payload._id !== prev._id)
+      }
     default: // if none match return state unchanged
       return currentStateOfObject
   }

@@ -30,7 +30,7 @@ function Home() {
     
     getWorkouts() // call async function
     
-  }, []); // empty array second parameter ensures it will only get called once
+  }, [dispatch]); // empty array second parameter ensures it will only get called once, place dispach in there to get rid of dispach dependancy warning
 
   
 
