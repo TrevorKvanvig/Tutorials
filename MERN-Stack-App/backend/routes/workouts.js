@@ -8,6 +8,8 @@ const {
   deleteWorkout,
   updateWorkout
 } = require('../controllers/workoutController')
+
+
 //=========Routes===================
 //http://localhost:3000/api/workouts/
 router.route('/')
