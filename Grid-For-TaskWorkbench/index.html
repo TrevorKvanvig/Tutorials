@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      background-color: beige;
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+      
+    }
+
+    .title {
+      flex-basis: 100px;
+    }
+
+    .grid {
+      background-color: brown;
+      height: 100vh;
+      display: flex;
+      gap: 10px;
+      overflow-x: scroll;
+    }
+    
+    .board {
+      height: 400px;
+      width: 300px;
+      min-width: 300px;
+      background-color: black;
+    
+    }
+  </style>
+</head>
+<body>
+  <h1>Task Workbench</h1>
+  <div class="grid">
+    <div class="board"></div>
+    <div class="board"></div>
+    <div class="board"></div>
+    <div class="board"></div>
+    <div class="board"></div>
+    <div class="board"></div>
+    <div class="board"></div>
+    <div class="board"></div>
+    <div class="board"></div>
+    <div class="board"></div>
+  </div>
+</body>
+</html>
