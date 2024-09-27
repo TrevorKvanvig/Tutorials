@@ -1,0 +1,15 @@
+/Users/trevork./Desktop/Personal_Code/GitHub/Tutorials/Dotnet-Course-Code/HelloWorld/bin/Debug/net8.0/HelloWorld
+/Users/trevork./Desktop/Personal_Code/GitHub/Tutorials/Dotnet-Course-Code/HelloWorld/bin/Debug/net8.0/HelloWorld.deps.json
+/Users/trevork./Desktop/Personal_Code/GitHub/Tutorials/Dotnet-Course-Code/HelloWorld/bin/Debug/net8.0/HelloWorld.runtimeconfig.json
+/Users/trevork./Desktop/Personal_Code/GitHub/Tutorials/Dotnet-Course-Code/HelloWorld/bin/Debug/net8.0/HelloWorld.dll
+/Users/trevork./Desktop/Personal_Code/GitHub/Tutorials/Dotnet-Course-Code/HelloWorld/bin/Debug/net8.0/HelloWorld.pdb
+/Users/trevork./Desktop/Personal_Code/GitHub/Tutorials/Dotnet-Course-Code/HelloWorld/obj/Debug/net8.0/HelloWorld.GeneratedMSBuildEditorConfig.editorconfig
+/Users/trevork./Desktop/Personal_Code/GitHub/Tutorials/Dotnet-Course-Code/HelloWorld/obj/Debug/net8.0/HelloWorld.AssemblyInfoInputs.cache
+/Users/trevork./Desktop/Personal_Code/GitHub/Tutorials/Dotnet-Course-Code/HelloWorld/obj/Debug/net8.0/HelloWorld.AssemblyInfo.cs
+/Users/trevork./Desktop/Personal_Code/GitHub/Tutorials/Dotnet-Course-Code/HelloWorld/obj/Debug/net8.0/HelloWorld.csproj.CoreCompileInputs.cache
+/Users/trevork./Desktop/Personal_Code/GitHub/Tutorials/Dotnet-Course-Code/HelloWorld/obj/Debug/net8.0/HelloWorld.sourcelink.json
+/Users/trevork./Desktop/Personal_Code/GitHub/Tutorials/Dotnet-Course-Code/HelloWorld/obj/Debug/net8.0/HelloWorld.dll
+/Users/trevork./Desktop/Personal_Code/GitHub/Tutorials/Dotnet-Course-Code/HelloWorld/obj/Debug/net8.0/refint/HelloWorld.dll
+/Users/trevork./Desktop/Personal_Code/GitHub/Tutorials/Dotnet-Course-Code/HelloWorld/obj/Debug/net8.0/HelloWorld.pdb
+/Users/trevork./Desktop/Personal_Code/GitHub/Tutorials/Dotnet-Course-Code/HelloWorld/obj/Debug/net8.0/HelloWorld.genruntimeconfig.cache
+/Users/trevork./Desktop/Personal_Code/GitHub/Tutorials/Dotnet-Course-Code/HelloWorld/obj/Debug/net8.0/ref/HelloWorld.dll
