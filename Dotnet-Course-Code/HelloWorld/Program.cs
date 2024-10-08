@@ -9,7 +9,7 @@ namespace HelloWorld
     internal class Program
     {
       static void Main(string[] args){
-        string connectionString = "Server=localhost;Database=DotNetCourseDatabase;TrustServerCertificate=true;Trusted_Connection=false;User ID=SA;Password=D1mcBWHP";
+        string connectionString = "Server=localhost;Database=DotNetCourseDatabase;TrustServerCertificate=true;Trusted_Connection=false;User ID=SA;Password=";
 
         IDbConnection dbConnection = new SqlConnection(connectionString);
 
