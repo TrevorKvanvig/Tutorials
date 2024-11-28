@@ -15,18 +15,18 @@ namespace api.Controllers
         private readonly ApplicationDbContext _context;
         public StockController(ApplicationDbContext context)
         {
-            _context = context;
+            _context = context; // set context passed from program CS as context used in class
         }
 
-        [HttpGet]
+        [HttpGet] // when nothing is passed on api/stock return all stocks
         public IActionResult GetAll()
         {
             var stocks = _context.Stocks.ToList();
 
-            return Ok(stocks);
+            return Ok(stocks); // send 200 ok message with the list of stocks
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}")] // when id is passed on api/stock/{id} return stocks with id
         public IActionResult GetById([FromRoute] int id) {
             var stock = _context.Stocks.Find(id);
 

@@ -11,7 +11,9 @@ namespace api.Models
         public string Title { get; set; } = string.Empty;
         public string Content { get; set; } = string.Empty;
         public DateTime CreatedOn { get; set; } = DateTime.Now;
-        public int? StockId { get; set; } //Navigation Property
+        
+        //dotnet core will see this stock id and the relationship will form
+        public int? StockId { get; set; } //Navigation Property - links comment to stock
         public Stock? Stock { get; set; } 
     }
 }
