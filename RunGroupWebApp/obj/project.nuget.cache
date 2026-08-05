@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "gDiIWnKcrM8=",
+  "dgSpecHash": "eDfpm7uaWwA=",
   "success": true,
-  "projectFilePath": "D:\\Coding Projects\\GitHub\\Tutorials\\RunGroupWebApp\\RunGroupWebApp.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\Tekva\\Coding Projects\\Tutorials\\RunGroupWebApp\\RunGroupWebApp.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Tekva\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.29\\microsoft.netcore.app.ref.8.0.29.nupkg.sha512",
+    "C:\\Users\\Tekva\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.29\\microsoft.windowsdesktop.app.ref.8.0.29.nupkg.sha512",
+    "C:\\Users\\Tekva\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.29\\microsoft.aspnetcore.app.ref.8.0.29.nupkg.sha512",
+    "C:\\Users\\Tekva\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\8.0.29\\microsoft.netcore.app.host.win-x64.8.0.29.nupkg.sha512"
+  ],
   "logs": []
 }
