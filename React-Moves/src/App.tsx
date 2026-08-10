@@ -1,35 +1,50 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import MoviesList from "./features/movies/components/MoviesList";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const movies = [
+    {
+      id: 1,
+      title: "The Matrix",
+      poster: "https://i.redd.it/53b7y66oenqc1.jpeg",
+    },
+    {
+      id: 2,
+      title: "The Matrix",
+      poster: "https://i.redd.it/53b7y66oenqc1.jpeg",
+    },
+    {
+      id: 3,
+      title: "The Matrix",
+      poster: "https://i.redd.it/53b7y66oenqc1.jpeg",
+    },
+  ];
+
+  const upcomingReleases = [
+    {
+      id: 1,
+      title: "upcomingReleases",
+      poster: "https://i.redd.it/53b7y66oenqc1.jpeg",
+    },
+    {
+      id: 2,
+      title: "upcomingReleases",
+      poster: "https://i.redd.it/53b7y66oenqc1.jpeg",
+    },
+    {
+      id: 3,
+      title: "upcomingReleases",
+      poster: "https://i.redd.it/53b7y66oenqc1.jpeg",
+    },
+  ];
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <h3>In Theaters</h3>
+      <MoviesList movies={movies} />
+      <h3>Upcoming Releases</h3>
+      <MoviesList movies={upcomingReleases} />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
