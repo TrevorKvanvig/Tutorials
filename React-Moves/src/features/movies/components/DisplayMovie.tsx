@@ -1,19 +1,15 @@
-import type Movie from '../models/movie.model';
-import styles from './DisplayMovie.module.css'
-
-export default function DisplayMovie(props: DisplayMovieProps) {
-    const buildLink = () => `/movie/${props.movie.id}`
-
+import type Movie from "../modules/movie.model"
+import styles from "../components/DisplayMovie.module.css"
+export default function DisplayMovie({movie}: DisplayMovieProps) {
+    const buildLink = () => `/movie/${movie.id}`
     return (
         <div className={styles.div}>
             <a href={buildLink()}>
-                <img src={props.movie.poster} alt={props.movie.title}/>
+                <img src={movie.poster}/>
             </a>
-            <p>
-                <a href={buildLink()}>
-                    {props.movie.title}
-                </a>
-            </p>
+            <a href={buildLink()}>
+                <h3>{movie.title}</h3>
+            </a>
         </div>
     )
 }
