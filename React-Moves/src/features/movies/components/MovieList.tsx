@@ -1,25 +1,18 @@
 import type Movie from '../modules/movie.model'
 import DisplayMovie from './DisplayMovie'
 import styles from '../components/MoviesList.module.css'
+import GenericList from '../../../components/GenericList'
 
 export default function MovieList(props: MovieListProps) {
     
-    if (props.movies == null) {
-        return (
-        <p>Loading...</p>
+    return (
+        <GenericList list={props.movies}
+        emptyUI={<h1>THIS EMPTY!!!!!!!!!</h1>}>
+            <div className={styles.div }>
+                {props.movies?.map((movie) => <DisplayMovie key={movie.id} movie={movie} />)}
+            </div>
+        </GenericList>
     )
-    } else if (props.movies.length === 0) {
-        return (
-        <p>No Movies to Display</p>
-    )
-    }
-    else {
-        return (
-        <div className={styles.div }>
-            {props.movies.map((movie) => <DisplayMovie key={movie.id} movie={movie} />)}
-        </div>
-    )
-    }
     
 }
 

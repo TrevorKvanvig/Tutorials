@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import MovieList from "./features/movies/components/MovieList";
 import type Movie from "./features/movies/modules/movie.model";
+import Button from "./components/Button";
 function App() {
   const [movies, setMovies] = useState<AppState>({});
   useEffect(() => {
@@ -39,12 +40,13 @@ function App() {
   }, []);
 
   return (
-    <>
+    <div className="container">
+      <Button>CLICK ME</Button>
       <h3>Iconic Movies</h3>
       <MovieList movies={movies.iconicMovies} />
       <h3>New Releases</h3>
       <MovieList movies={movies.newReleases} />
-    </>
+    </div>
   );
 }
 

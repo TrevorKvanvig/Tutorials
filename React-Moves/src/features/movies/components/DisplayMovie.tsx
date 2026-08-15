@@ -8,7 +8,7 @@ export default function DisplayMovie({movie}: DisplayMovieProps) {
                 <img src={movie.poster}/>
             </a>
             <a href={buildLink()}>
-                <h3>{movie.title}</h3>
+                <p>{movie.title}</p>
             </a>
         </div>
     )
