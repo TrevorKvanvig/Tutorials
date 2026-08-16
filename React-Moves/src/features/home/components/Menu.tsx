@@ -17,6 +17,13 @@ export default function Menu() {
                         <li className="nav-item">
                             <NavLink to="/genres" className="nav-link">Genres</NavLink>
                         </li>
+                        <li className="nav-item">
+                            <NavLink to="/actors" className="nav-link">Actors</NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink to="/theaters" className="nav-link">Theaters</NavLink>
+                        </li>
+                       
                     </ul>
                 </div>
             </div>
